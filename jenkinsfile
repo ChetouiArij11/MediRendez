@@ -2,17 +2,14 @@ pipeline {
     agent any
 
     environment {
-        // Définir d'autres variables d'environnement au besoin
-        DOCKER_REGISTRY_CREDENTIALS = credentials('docker-credentials') // Créez des identifiants Docker dans Jenkins et référencez-les ici
-        DOCKER_IMAGE = 'arijchetoui1/medirendez' // Nom de votre image Docker
-        DOCKER_REGISTRY_URL = 'https://hub.docker.com/repositories/arijchetoui1' // URL de votre registre Docker
+        DOCKER_IMAGE = 'arijchetoui1/medirendez'
         VERSION = getGitVersion()
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/ChetouiArij11/MediRendez/tree/main/backend'
+                git 'https://github.com/ChetouiArij11/MediRendez.git'
             }
         }
 
@@ -27,7 +24,7 @@ pipeline {
         stage('Push to Docker Registry') {
             steps {
                 script {
-                    docker.withRegistry('', "${DOCKER_REGISTRY_CREDENTIALS}") {
+                    docker.withRegistry('', '') {
                         docker.image("${DOCKER_IMAGE}:${VERSION}").push()
                         docker.image("${DOCKER_IMAGE}:latest").push()
                     }
@@ -38,5 +35,5 @@ pipeline {
 }
 
 def getGitVersion() {
-    bat(script: 'for /f %%h in (\'git rev-parse --short HEAD\') do echo %%h', returnStdout: true).trim()
+    bat(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 }
