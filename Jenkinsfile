@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Définir d'autres variables d'environnement au besoin
-        DOCKER_REGISTRY_CREDENTIALS = credentials('arijchetoui1/00000000') // Créez des identifiants Docker dans Jenkins et référencez-les ici
+        DOCKER_REGISTRY_CREDENTIALS = credentials('arijchetoui') // Créez des identifiants Docker dans Jenkins et référencez-les ici
         DOCKER_IMAGE = 'arijchetoui1/medirendez' // Nom de votre image Docker
         DOCKER_REGISTRY_URL = 'https://hub.docker.com/repositories/arijchetoui1' // URL de votre registre Docker
         VERSION = getGitVersion()
